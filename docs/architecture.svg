@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="330" viewBox="0 0 1120 330" role="img" aria-labelledby="title desc">
+  <title id="title">Semantic Gaussian room reconstruction pipeline</title>
+  <desc id="desc">A room video branches into Gaussian reconstruction and tracked semantic masks, which combine into semantic Gaussians and an editor.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1321"/><stop offset="1" stop-color="#17243a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4cc9f0"/><stop offset="1" stop-color="#7b61ff"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#7dd3fc"/>
+    </marker>
+    <style>
+      .label{font:600 17px system-ui,-apple-system,sans-serif;fill:#f8fafc;text-anchor:middle}
+      .small{font:400 13px system-ui,-apple-system,sans-serif;fill:#b9c7dc;text-anchor:middle}
+      .box{fill:#172033;stroke:#46607e;stroke-width:1.5}
+      .line{fill:none;stroke:#7dd3fc;stroke-width:2.5;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1120" height="330" rx="20" fill="url(#bg)"/>
+  <text x="560" y="42" class="label" style="font-size:23px">Semantic Gaussian Room Editor</text>
+  <rect x="35" y="125" width="155" height="90" rx="14" class="box"/>
+  <text x="112" y="163" class="label">Room video</text><text x="112" y="188" class="small">RGB frames</text>
+  <rect x="260" y="72" width="205" height="90" rx="14" class="box"/>
+  <text x="362" y="108" class="label">3D reconstruction</text><text x="362" y="133" class="small">poses + Gaussian Splat</text>
+  <rect x="260" y="198" width="205" height="90" rx="14" class="box"/>
+  <text x="362" y="233" class="label">Tracked semantics</text><text x="362" y="258" class="small">DINO + SAM 2.1 + layout</text>
+  <rect x="545" y="125" width="205" height="90" rx="14" fill="url(#accent)" opacity=".92"/>
+  <text x="647" y="163" class="label">Multiview fusion</text><text x="647" y="188" class="small" style="fill:#eef2ff">evidence on Gaussians</text>
+  <rect x="830" y="125" width="250" height="90" rx="14" class="box"/>
+  <text x="955" y="163" class="label">Interactive editor</text><text x="955" y="188" class="small">inspect + save proxy edits</text>
+  <path d="M190 155 C220 155 225 117 260 117" class="line"/><path d="M190 185 C220 185 225 243 260 243" class="line"/>
+  <path d="M465 117 C505 117 505 150 545 150" class="line"/><path d="M465 243 C505 243 505 190 545 190" class="line"/>
+  <path d="M750 170 L830 170" class="line"/>
+  <text x="560" y="313" class="small">One coordinate system • persistent instances • explicit uncertainty • reproducible experiments</text>
+</svg>

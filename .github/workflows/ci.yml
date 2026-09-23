@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Python contract tests
+        run: python -m unittest discover -s tests -v
+      - name: JavaScript syntax checks
+        run: |
+          node --check viewer/server.js
+          node --check viewer/main.js
+      - name: Regenerate the synthetic demo
+        run: python scripts/generate_synthetic_demo.py
+      - name: Check generated demo files
+        run: |
+          test -s demo/scan_demo/splat.ply
+          test -s demo/scan_demo/object_bounding_boxes.json
+          test -s demo/scan_demo/semantic_scene_manifest.json
+          git diff --exit-code -- demo/scan_demo

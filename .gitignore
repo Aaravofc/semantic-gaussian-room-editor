@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Notebooks and editors
+.ipynb_checkpoints/
+.DS_Store
+.idea/
+.vscode/
+
+# Models, private captures, and generated research outputs
+scans/
+data/
+outputs/
+checkpoints/
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+*.ssproj
+
+# Viewer state
+scene_edit_state.json
+demo/**/scene_edit_state.json
+
+# Keep only the deliberately generated, synthetic demo assets.
+!demo/
+!demo/scan_demo/
+!demo/scan_demo/*.json
+!demo/scan_demo/*.ply
+

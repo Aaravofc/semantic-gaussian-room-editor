@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Semantic Gaussian Editor</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="viewport-shell" aria-label="3D room viewer">
+        <div id="splat-viewer" class="viewer-layer"></div>
+        <canvas id="overlay-canvas" class="viewer-layer"></canvas>
+        <div id="status" class="status-panel"></div>
+      </section>
+
+      <aside class="side-panel" aria-label="Semantic object controls">
+        <div class="panel-section">
+          <h1>Semantic Gaussian Editor</h1>
+          <div class="toggle-grid">
+            <label><input id="show-splat" type="checkbox" checked> Gaussian scene</label>
+            <label><input id="show-objects" type="checkbox" checked> Semantic proxies</label>
+            <label><input id="show-semantic-points" type="checkbox"> Semantic point overlay</label>
+            <label><input id="show-boxes" type="checkbox" checked> Bounding boxes</label>
+            <label><input id="show-labels" type="checkbox" checked> Labels</label>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <label class="field-label" for="label-filter">Filter by label</label>
+          <select id="label-filter"></select>
+        </div>
+
+        <div class="panel-section object-list-section">
+          <div class="section-title">Objects</div>
+          <div id="object-list" class="object-list"></div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-title">Selected Object</div>
+          <dl id="metadata" class="metadata"></dl>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-title">Transform</div>
+          <div class="segmented-control transform-target-control" role="group" aria-label="Transform target">
+            <button class="target-button active" data-target="object">Object</button>
+            <button class="target-button" data-target="splat">Scene</button>
+          </div>
+          <div class="segmented-control" role="group" aria-label="Transform mode">
+            <button class="mode-button active" data-mode="translate">Move</button>
+            <button class="mode-button" data-mode="rotate">Rotate</button>
+            <button class="mode-button" data-mode="scale">Scale</button>
+          </div>
+          <button id="reset-object" class="secondary-button">Reset Object Transform</button>
+          <button id="remove-object" class="danger-button">Remove Object</button>
+          <button id="reset-splat" class="secondary-button">Reset Splat Transform</button>
+          <button id="save-edits" class="primary-button">Save Edit State</button>
+        </div>
+      </aside>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+          "@mkkellogg/gaussian-splats-3d": "https://unpkg.com/@mkkellogg/gaussian-splats-3d@0.4.7/build/gaussian-splats-3d.module.js"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

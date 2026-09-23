@@ -1,0 +1,11 @@
+{
+  "project_root": "/absolute/path/to/semantic-gaussian-room-editor",
+  "scan_id": "scan_001",
+  "require_gpu": true,
+  "resume": true,
+  "force_stage": false,
+  "max_frames": null,
+  "sam2_repo": "/absolute/path/to/sam2-repo",
+  "sam2_checkpoint": "/absolute/path/to/checkpoints/sam2.1_hiera_large.pt"
+}
+

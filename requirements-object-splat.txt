@@ -1,0 +1,7 @@
+# This stack was tested with Python 3.11/3.12 and a CUDA-capable PyTorch build.
+numpy==1.26.4
+nerfstudio==1.1.5
+plyfile>=1.1
+opencv-python-headless>=4.9
+tqdm>=4.66
+

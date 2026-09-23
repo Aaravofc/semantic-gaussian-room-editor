@@ -1,0 +1,13 @@
+# Tested segmentation environment. PyTorch should be installed using the
+# command appropriate for the machine's CUDA version before this file.
+accelerate>=1.0
+huggingface_hub>=0.28
+matplotlib>=3.8
+opencv-python-headless>=4.9
+Pillow>=10
+tqdm>=4.66
+transformers>=4.57,<6
+
+# SAM 2.1 is installed from Meta's official repository by segmentation.ipynb:
+# https://github.com/facebookresearch/sam2
+
