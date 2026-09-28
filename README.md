@@ -6,6 +6,11 @@ and inspecting the resulting scene in a browser editor.
 
 ![Pipeline architecture](docs/architecture.svg)
 
+**[Launch the live interactive demo](https://aaravofc.github.io/semantic-gaussian-room-editor/)**
+
+The hosted demo opens directly in a browser and uses a privacy-safe synthetic room. No install,
+GPU, account, or uploaded room capture is required.
+
 The central design choice is to keep appearance, geometry, and semantic evidence in one room
 coordinate system. Object masks and labels annotate the existing Gaussians instead of replacing
 the successful room reconstruction with independently normalized meshes.
@@ -30,6 +35,11 @@ The repository contains a small **synthetic** Gaussian room. It does not contain
 capture, private images, or model checkpoints.
 
 Requirements: Node.js 18+ and an internet connection for the viewer's pinned Three.js modules.
+
+For the fastest preview, use the
+[hosted GitHub Pages demo](https://aaravofc.github.io/semantic-gaussian-room-editor/). Edits made
+there are saved only in the visitor's browser. To run the same viewer with file-backed edit-state
+persistence, use the local server:
 
 ```bash
 node viewer/server.js \
@@ -156,4 +166,3 @@ and `@mkkellogg/gaussian-splats-3d`. Those projects retain their own licenses an
 
 Original code in this repository is released under the [MIT License](LICENSE). External models,
 checkpoints, datasets, and dependencies are governed by their respective licenses.
-

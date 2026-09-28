@@ -3,6 +3,12 @@
 The viewer renders one canonical Gaussian Splat and overlays semantic object proxies in the
 same coordinate system.
 
+## Hosted demo
+
+Open <https://aaravofc.github.io/semantic-gaussian-room-editor/>. The hosted version loads the
+bundled synthetic room and keeps saved edit state in the visitor's browser. It does not upload
+data or require a backend.
+
 ## Run the checked-in demo
 
 From the repository root:
@@ -41,4 +47,3 @@ combined_objects_semantic_colored.ply  optional diagnostic overlay
 
 Proxy transforms do not rewrite individual Gaussians. True object editing requires stable
 per-Gaussian instance membership and group transforms.
-

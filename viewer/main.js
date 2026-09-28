@@ -4,11 +4,12 @@ import { TransformControls } from "three/addons/controls/TransformControls.js";
 import { PLYLoader } from "three/addons/loaders/PLYLoader.js";
 
 const DEFAULT_PATHS = {
-  splat: "/data/splat.ply",
-  manifest: "/data/semantic_scene_manifest.json",
-  boxes: "/data/object_bounding_boxes.json",
-  semanticPly: "/data/combined_objects_semantic_colored.ply"
+  splat: new URL("../demo/scan_demo/splat.ply", import.meta.url).href,
+  manifest: new URL("../demo/scan_demo/semantic_scene_manifest.json", import.meta.url).href,
+  boxes: new URL("../demo/scan_demo/object_bounding_boxes.json", import.meta.url).href,
+  semanticPly: new URL("../demo/scan_demo/combined_objects_semantic_colored.ply", import.meta.url).href
 };
+const EDIT_STATE_STORAGE_KEY = "semantic-gaussian-room-editor.edit-state.v3";
 
 const LABEL_COLORS = [
   "#e45756", "#4c78a8", "#f2cf5b", "#54a24b", "#b279a2", "#ff9da6",
@@ -50,6 +51,7 @@ const state = {
   semanticPointCloud: null,
   semanticPointsLoading: false,
   splatEdit: null,
+  hasServerApi: false,
   messages: []
 };
 
@@ -454,14 +456,17 @@ function renderSplatMetadata() {
 
 async function loadSavedEditState() {
   let result;
-  try {
-    const response = await fetch("/api/edit-state", { cache: "no-store" });
-    if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
-    result = await response.json();
-  } catch (error) {
-    addMessage(`Saved edit state unavailable: ${error.message}`);
-    return;
+  if (state.hasServerApi) {
+    try {
+      const response = await fetch(new URL("../api/edit-state", window.location.href), { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      result = await response.json();
+    } catch (error) {
+      addMessage(`Server edit state unavailable; using browser storage. ${error.message}`);
+    }
   }
+
+  if (!result) result = loadBrowserEditState();
   if (!result.found || !result.state) return;
 
   const saved = result.state;
@@ -520,14 +525,19 @@ async function saveEditState() {
     object_edits: Array.from(state.edits.values()),
     splat_transform: state.splatEdit
   };
-  const response = await fetch("/api/save-edit-state", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload, null, 2)
-  });
-  if (!response.ok) throw new Error(await response.text());
-  const result = await response.json();
-  addMessage(`Saved ${payload.object_edits.length} object state(s) to ${result.path}.`);
+  if (state.hasServerApi) {
+    const response = await fetch(new URL("../api/save-edit-state", window.location.href), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload, null, 2)
+    });
+    if (!response.ok) throw new Error(await response.text());
+    const result = await response.json();
+    addMessage(`Saved ${payload.object_edits.length} object state(s) to ${result.path}.`);
+  } else {
+    window.localStorage.setItem(EDIT_STATE_STORAGE_KEY, JSON.stringify(payload));
+    addMessage(`Saved ${payload.object_edits.length} object state(s) in this browser.`);
+  }
   updateStatus();
 }
 
@@ -610,12 +620,28 @@ function buildManifestMap(data) {
 
 async function fetchServerConfig() {
   try {
-    const response = await fetch("/api/config", { cache: "no-store" });
+    const response = await fetch(new URL("../api/config", window.location.href), { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
-    return response.json();
+    const config = await response.json();
+    state.hasServerApi = true;
+    return config;
   } catch (error) {
-    addMessage(`Server config unavailable; using default paths. ${error.message}`);
+    addMessage("Static demo mode: using the bundled synthetic room and browser-local edit storage.");
     return null;
+  }
+}
+
+function loadBrowserEditState() {
+  try {
+    const saved = window.localStorage.getItem(EDIT_STATE_STORAGE_KEY);
+    return {
+      found: Boolean(saved),
+      path: "this browser",
+      state: saved ? JSON.parse(saved) : null
+    };
+  } catch (error) {
+    addMessage(`Browser edit state unavailable: ${error.message}`);
+    return { found: false, path: "this browser", state: null };
   }
 }
 

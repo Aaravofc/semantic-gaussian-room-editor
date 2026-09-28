@@ -88,10 +88,45 @@ select {
 }
 
 h1 {
-  margin: 0 0 14px;
+  margin: 4px 0 10px;
   font-size: 20px;
   line-height: 1.15;
   font-weight: 700;
+}
+
+.eyebrow {
+  color: #68c0b3;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.panel-intro,
+.viewer-hint {
+  margin: 0 0 11px;
+  color: #d8ccba;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.viewer-hint {
+  color: #a9a196;
+  font-size: 12px;
+}
+
+.source-link {
+  display: inline-block;
+  margin: 0 0 16px;
+  color: #f1c15f;
+  font-size: 13px;
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+.source-link:hover,
+.source-link:focus-visible {
+  color: #ffd983;
 }
 
 .section-title,
